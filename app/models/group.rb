@@ -1,4 +1,5 @@
 class Group < ActiveRecord::Base
-  validates :title, :description, presence: true
   belongs_to :user
+  has_many :posts
+  validates :title, :description, presence: true
 end
