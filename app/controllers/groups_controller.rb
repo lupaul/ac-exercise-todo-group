@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user! , only: [:new, :create, :update, :destroy]
   before_action :find_group_and_check_permission, only: [:edit, :update, :destroy]
+  before_action :find_group, only: [:show, :edit, :update, :detroy]
   def index
     @groups = Group.all
   end
@@ -20,14 +21,14 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @group = Group.find(params[:id])
+    # @group = Group.find(params[:id])
     # @posts = @group.posts.order("created_at DESC")
     @posts = @group.posts.recent.paginate(:page => params[:page], :per_page => 5)
   end
 
   def edit
     # find_group_and_check_permission
-    @group = Group.find(params[:id])
+    # @group = Group.find(params[:id])
     # if current_user != @group.user
     #   redirect_to root_path, alert: "You have no permission"
     # end
@@ -35,7 +36,7 @@ class GroupsController < ApplicationController
 
   def update
     # find_group_and_check_permission
-    @group = Group.find(params[:id])
+    # @group = Group.find(params[:id])
     # if current_user != @group.user
     #   redirect_to root_path, alert: "You have no permission"
     # end
@@ -48,7 +49,7 @@ class GroupsController < ApplicationController
 
   def destroy
     # find_group_and_check_permission
-    @group = Group.find(params[:id])
+    # @group = Group.find(params[:id])
     # if current_user != @group.user
     #   redirect_to root_path, alert: "You have no permission"
     # end
@@ -59,6 +60,10 @@ class GroupsController < ApplicationController
   end
 
   private
+
+  def find_group
+    @group = Group.find(params[:id])
+  end
 
   def find_group_and_check_permission
     @group = Group.find(params[:id])
