@@ -3,7 +3,7 @@ class GroupsController < ApplicationController
   before_action :find_group_and_check_permission, only: [:edit, :update, :destroy]
   before_action :find_group, only: [ :edit, :update, :detroy]
   def index
-    @groups = Group.all
+    @groups = Group.all.recentt
   end
 
   def new
