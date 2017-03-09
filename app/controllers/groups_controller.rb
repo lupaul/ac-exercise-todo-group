@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user! , only: [:new, :create, :update, :destroy]
   before_action :find_group_and_check_permission, only: [:edit, :update, :destroy]
-  before_action :find_group, only: [:show, :edit, :update, :detroy]
+  before_action :find_group, only: [ :edit, :update, :detroy]
   def index
     @groups = Group.all
   end
@@ -23,7 +23,7 @@ class GroupsController < ApplicationController
   end
 
   def show
-    # @group = Group.find(params[:id])
+    @group = Group.find(params[:id])
     # @posts = @group.posts.order("created_at DESC")
     @posts = @group.posts.recent.paginate(:page => params[:page], :per_page => 5)
   end
@@ -91,7 +91,7 @@ class GroupsController < ApplicationController
 
   def find_group
     # @group = Group.find(params[:id])
-    @group = current_user.group.find(params[:id])
+    @group = current_user.groups.find(params[:id])
   end
 
   def find_group_and_check_permission

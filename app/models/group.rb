@@ -4,4 +4,5 @@ class Group < ActiveRecord::Base
   validates :title, :description, presence: true
   has_many :group_relationships
   has_many :members, through: :group_relationships, source: :user
+  
 end
