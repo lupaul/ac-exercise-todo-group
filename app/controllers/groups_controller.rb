@@ -11,7 +11,8 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = Group.new(group_params)
+    # @group = Group.new(group_params)
+    @group = current_user.groups.new(group_params)
     @group.user = current_user
     if @group.save
       current_user.join!(@group)
@@ -89,7 +90,8 @@ class GroupsController < ApplicationController
   private
 
   def find_group
-    @group = Group.find(params[:id])
+    # @group = Group.find(params[:id])
+    @group = current_user.group.find(params[:id])
   end
 
   def find_group_and_check_permission
